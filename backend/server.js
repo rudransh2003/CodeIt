@@ -56,21 +56,12 @@
 
     io.on('connection', socket => {
         socket.roomId = socket.project._id.toString()
-
-
         console.log('a user connected');
-
-
-
         socket.join(socket.roomId);
-
         socket.on('project-message', async data => {
-
             const message = data.message;
-
             const aiIsPresentInMessage = message.includes('@ai');
             socket.broadcast.to(socket.roomId).emit('project-message', data)
-
             if (aiIsPresentInMessage) {
                 const prompt = message.replace('@ai', '');
                 const result = await generateResult(prompt);
@@ -83,8 +74,6 @@
                 })
                 return
             }
-
-
         })
 
         socket.on('disconnect', () => {

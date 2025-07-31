@@ -2,6 +2,7 @@ import mongoose from "mongoose";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
+// mongoose -> It helps you interact with MongoDB using JavaScript objects and models, instead of writing raw MongoDB queries.
 const userSchema = new mongoose.Schema({
     email: {
         type: String,
@@ -14,7 +15,7 @@ const userSchema = new mongoose.Schema({
     },
     password: {
         type: String,
-        select: false,
+        select: false, // password will not be shown to the user in frontend    
     }
 })
 userSchema.statics.hashPassword = async function (password) {
