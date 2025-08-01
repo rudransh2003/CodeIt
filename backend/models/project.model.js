@@ -14,11 +14,10 @@ const projectSchema = new mongoose.Schema({
             ref: 'user'
         }
     ],
-    fileTree: {
+    fileTree: {   //This is meant to represent the folder & file structure of the project
         type: Object,
         default: {}
     },
-
 })
 const Project = mongoose.model('project', projectSchema)
 

@@ -5,10 +5,10 @@ import * as authMiddleWare from '../middleware/auth.middleware.js';
 
 const router = Router();
 
-
 router.post('/create',
     authMiddleWare.authUser,
-    body('name').isString().withMessage('Name is required'),
+    body('name').isString().withMessage('Name is required'),  
+    // routes->middleware->routes->controller->service->model->service->controller(201 created)
     projectController.createProject
 )
 

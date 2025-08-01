@@ -4,18 +4,14 @@ import axios from "../config/axios"
 import { useNavigate } from 'react-router-dom'
 
 const Home = () => {
-
     const { user } = useContext(UserContext)
     const [ isModalOpen, setIsModalOpen ] = useState(false)
     const [ projectName, setProjectName ] = useState(null)
     const [ project, setProject ] = useState([])
-
     const navigate = useNavigate()
-
     function createProject(e) {
         e.preventDefault()
         console.log({ projectName })
-
         axios.post('/projects/create', {
             name: projectName,
         })
@@ -27,15 +23,12 @@ const Home = () => {
                 console.log(error)
             })
     }
-
     useEffect(() => {
         axios.get('/projects/all').then((res) => {
             setProject(res.data.projects)
-
         }).catch(err => {
             console.log(err)
         })
-
     }, [])
 
     return (
@@ -65,14 +58,10 @@ const Home = () => {
                                 <p> <small> <i className="ri-user-line"></i> Collaborators</small> :</p>
                                 {project.users.length}
                             </div>
-
                         </div>
                     ))
                 }
-
-
             </div>
-
             {isModalOpen && (
                 <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
                     <div className="bg-white p-6 rounded-md shadow-md w-1/3">
@@ -93,8 +82,6 @@ const Home = () => {
                     </div>
                 </div>
             )}
-
-
         </main>
     )
 }
