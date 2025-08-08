@@ -91,3 +91,21 @@ export const getAllUsersController = async (req, res) => {
 
     }
 }
+
+export const ValidateController = async (req, res) => {
+    try {
+        const userEmail = req.user?.email;
+        const userId = req.user?._id;
+        let user;
+        if (userEmail) {
+            user = await userModel.findOne({ email: userEmail }).select('-password');
+        }
+        console.log('User validation successful:', user.email);
+        res.json({ user });
+    } catch (err) {
+        res.status(500).json({
+            error: 'Server error during validation',
+            details: process.env.NODE_ENV === 'development' ? err.message : undefined
+        });
+    }
+}

@@ -35,7 +35,6 @@ export const UserProvider = ({ children }) => {
         message: err.message
       });
       
-      // Remove invalid token
       localStorage.removeItem('token');
       setUser(null);
     })
