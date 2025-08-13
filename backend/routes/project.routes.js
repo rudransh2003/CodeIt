@@ -8,6 +8,7 @@ const router = Router();
 router.post('/create',
     authMiddleWare.authUser,
     body('name').isString().withMessage('Name is required'),  
+    body('description').isString().withMessage('Description is required'),
     // routes->middleware->routes->controller->service->model->service->controller(201 created)
     projectController.createProject
 )

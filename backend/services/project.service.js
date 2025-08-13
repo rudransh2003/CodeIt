@@ -2,7 +2,7 @@ import projectModel from '../models/project.model.js';
 import mongoose from 'mongoose';
 
 export const createProject = async ({
-    name, userId
+    name, userId, description
 }) => {
     if (!name) {
         throw new Error('Name is required')
@@ -10,10 +10,14 @@ export const createProject = async ({
     if (!userId) {
         throw new Error('UserId is required')
     }
+    if (!description) {
+        throw new Error('Description is required')
+    }
     let project;
     try {
         project = await projectModel.create({
             name,
+            description,
             users: [ userId ]
         });
     } catch (error) {

@@ -9,10 +9,10 @@ export const createProject = async (req, res) => {
         return res.status(400).json({ errors: errors.array() });
     }
     try {
-        const { name } = req.body;
+        const { name, description } = req.body;
         const loggedInUser = await userModel.findOne({ email: req.user.email });
         const userId = loggedInUser._id;
-        const newProject = await projectService.createProject({ name, userId });
+        const newProject = await projectService.createProject({ name, userId, description });
         res.status(201).json(newProject);
     } catch (err) {
         console.log(err);
