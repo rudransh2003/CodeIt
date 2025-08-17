@@ -4,40 +4,36 @@ import { UserContext } from '../context/user.context'
 import axios from '../config/axios'
 
 const Register = () => {
-
-    const [ email, setEmail ] = useState('')
-    const [ password, setPassword ] = useState('')
-
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('')
     const { setUser } = useContext(UserContext)
-
     const navigate = useNavigate()
 
-
     function submitHandler(e) {
-
         e.preventDefault()
-
         axios.post(`${import.meta.env.VITE_API_BASE_URL}/users/register`, {
             email,
-            password
-        }).then((res) => {
-            console.log(res.data)
-            localStorage.setItem('token', res.data.token)
-            setUser(res.data.user)
-            navigate('/login')
-        }).catch((err) => {
-            console.log(err.response.data)
+            password,
         })
+            .then((res) => {
+                localStorage.setItem('token', res.data.token)
+                setUser(res.data.user)
+                navigate('/')   
+            })
+            .catch((err) => {
+                console.log(err.response.data)
+            })
     }
 
+    function handleGoogleLogin() {
+        window.location.href = `${import.meta.env.VITE_API_BASE_URL}/users/google`
+    }
 
     return (
         <div className="min-h-screen flex items-center justify-center bg-gray-900">
             <div className="bg-gray-800 p-8 rounded-lg shadow-lg w-full max-w-md">
                 <h2 className="text-2xl font-bold text-white mb-6">Register</h2>
-                <form
-                    onSubmit={submitHandler}
-                >
+                <form onSubmit={submitHandler}>
                     <div className="mb-4">
                         <label className="block text-gray-400 mb-2" htmlFor="email">Email</label>
                         <input
@@ -51,7 +47,7 @@ const Register = () => {
                     <div className="mb-6">
                         <label className="block text-gray-400 mb-2" htmlFor="password">Password</label>
                         <input
-                            onChange={(e) => setPassword(e.target.value)} s
+                            onChange={(e) => setPassword(e.target.value)}
                             type="password"
                             id="password"
                             className="w-full p-3 rounded bg-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -65,8 +61,15 @@ const Register = () => {
                         Register
                     </button>
                 </form>
+                <button
+                    onClick={handleGoogleLogin}
+                    className="w-full p-3 mt-4 rounded bg-red-500 text-white hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500"
+                >
+                    Continue with Google
+                </button>
                 <p className="text-gray-400 mt-4">
-                    Already have an account? <Link to="/login" className="text-blue-500 hover:underline">Login</Link>
+                    Already have an account?{' '}
+                    <Link to="/login" className="text-blue-500 hover:underline">Login</Link>
                 </p>
             </div>
         </div>

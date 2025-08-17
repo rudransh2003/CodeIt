@@ -68,10 +68,9 @@ const Home = () => {
             <h1 className="flex justify-center p-10 md:text-3xl">
                 Welcome {user.email}
             </h1>
-
             <div className="flex flex-row justify-center py-4 gap-4">
                 <button
-                    onClick={() => setIsModalOpen(true)}
+                    onClick={() => setIsModalOpen(prev => !prev)}
                     className="project p-4 border border-slate-300 rounded-md hover:bg-slate-50"
                 >
                     New Project
@@ -97,7 +96,6 @@ const Home = () => {
                                 navigate(`/project`, { state: { project } })
                             }}
                         >
-                            {/* Tooltip */}
                             {hoveredProject === project._id && (
                                 <div className="absolute -top-10 left-1/2 -translate-x-1/2 bg-white border border-gray-300 rounded-md p-2 shadow-lg w-48 text-sm z-10">
                                     {project.description}
