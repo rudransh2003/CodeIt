@@ -33,6 +33,7 @@ const Home = () => {
     const fetchProjects = () => {
         axios.get('/projects/all')
             .then((res) => {
+                console.log(res)
                 setProject(res.data.projects)
             })
             .catch(err => {
@@ -89,31 +90,32 @@ const Home = () => {
                 {projectModal &&
                     project.map((project) => (
                         <div
-                            className="project relative flex flex-col gap-2 cursor-pointer p-4 border border-slate-300 rounded-md min-w-52 hover:bg-slate-200"
-                            onMouseEnter={() => setHoveredProject(project._id)}
-                            onMouseLeave={() => setHoveredProject(null)}
-                            onClick={() => {
-                                navigate(`/project`, { state: { project } })
-                            }}
+                          key={project._id} 
+                          className="project relative flex flex-col gap-2 cursor-pointer p-4 border border-slate-300 rounded-md min-w-52 hover:bg-slate-200"
+                          onMouseEnter={() => setHoveredProject(project._id)}
+                          onMouseLeave={() => setHoveredProject(null)}
+                          onClick={() => {
+                            navigate(`/project`, { state: { project } })
+                          }}
                         >
-                            {hoveredProject === project._id && (
-                                <div className="absolute -top-10 left-1/2 -translate-x-1/2 bg-white border border-gray-300 rounded-md p-2 shadow-lg w-48 text-sm z-10">
-                                    {project.description}
-                                </div>
-                            )}
-
-                            <h2 className='font-semibold'>
-                                {project.name}
-                            </h2>
-                            <div className="flex gap-2">
-                                <p>
-                                    <small><i className="ri-user-line"></i> Collaborators</small> :
-                                </p>
-                                {project.users.length}
+                          {hoveredProject === project._id && (
+                            <div className="absolute -top-10 left-1/2 -translate-x-1/2 bg-white border border-gray-300 rounded-md p-2 shadow-lg w-48 text-sm z-10">
+                              {project.description ? project.description : `No description available`}
                             </div>
+                          )}
+                      
+                          <h2 className='font-semibold'>
+                            {project.name}
+                          </h2>
+                          <div className="flex gap-2">
+                            <p>
+                              <small><i className="ri-user-line"></i> Collaborators</small> :
+                            </p>
+                            {project.users.length}
+                          </div>
                         </div>
-
-                    ))
+                      ))
+                      
                 }
                 <button
                     type="button"

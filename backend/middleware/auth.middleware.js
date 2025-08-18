@@ -3,23 +3,21 @@ import redisClient from "../services/redis.service.js";
 
 export const authUser = async (req, res, next) => {
     try {
-        // Safely extract token from cookies or authorization header
-        let token = req.cookies.token;
+        let token = null;
         
-        if (!token && req.headers.authorization) {
+        if (req.headers.authorization) {
             const authHeader = req.headers.authorization;
             if (authHeader.startsWith('Bearer ')) {
                 token = authHeader.split(' ')[1];
             }
         }
-        
+
         if (!token) {
             return res.status(401).send({ error: 'Unauthorized User' });
         }
 
         const isBlackListed = await redisClient.get(token);
         if (isBlackListed) {
-            res.cookie('token', '');
             return res.status(401).send({ error: 'Unauthorized User' });
         }
 

@@ -30,17 +30,7 @@ router.get(
 router.get(
   "/google/callback",
   passport.authenticate("google", { session: false }),
-  async (req, res) => {
-    try {
-      const token = await req.user.generateJWT();
-      delete req.user._doc.password;
-
-      // redirect back to frontend with token in URL
-      res.redirect(`http://localhost:5173/auth/success?token=${token}`);
-    } catch (err) {
-      res.redirect(`http://localhost:5173/auth/error`);
-    }
-  }
+  userController.googleLoginController
 );
 
 export default router;

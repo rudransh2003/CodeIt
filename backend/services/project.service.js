@@ -64,7 +64,7 @@ export const addUsersToProject = async ({ projectId, users, userId }) => {
     })
     console.log(project)
     if (!project) {
-        throw new Error("User not belong to this project")
+        throw new Error("User does not belong to this project")
     }
     const updatedProject = await projectModel.findOneAndUpdate({
         _id: projectId

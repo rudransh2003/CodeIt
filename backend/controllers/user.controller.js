@@ -48,6 +48,16 @@ export const loginController = async (req, res) => {
     }
 }
 
+export const googleLoginController = async (req, res) => {
+    try {
+      const token = await req.user.generateJWT();
+      delete req.user._doc.password;
+      res.redirect(`http://localhost:5173/auth/success?token=${token}`);
+    } catch (err) {
+      res.redirect(`http://localhost:5173/auth/error`);
+    }
+  }
+
 export const profileController = async (req, res) => {
     res.status(200).json({
         user: req.user
@@ -56,7 +66,7 @@ export const profileController = async (req, res) => {
 
 export const logoutController = async (req, res) => {
     try {
-        const token = req.cookies.token || req.headers.authorization.split(' ')[1];
+        const token = req.headers.authorization.split(' ')[1];
         redisClient.set(token, 'logout', 'EX', 60 * 60 * 24);
 
         res.status(200).json({

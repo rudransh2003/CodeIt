@@ -54,44 +54,34 @@ const Project = () => {
             } else {
                 newSelectedUserId.add(id);
             }
-
             return newSelectedUserId;
         });
-
-
     }
 
 
     function addCollaborators() {
-
         axios.put("/projects/add-user", {
             projectId: location.state.project._id,
             users: Array.from(selectedUserId)
         }).then(res => {
             console.log(res.data)
             setIsModalOpen(false)
-
         }).catch(err => {
             console.log(err)
         })
-
     }
 
     const send = () => {
-
         sendMessage('project-message', {
             message,
             sender: user
         })
         setMessages(prevMessages => [ ...prevMessages, { sender: user, message } ]) // Update messages state
         setMessage("")
-
     }
 
     function WriteAiMessage(message) {
-
         const messageObject = JSON.parse(message)
-
         return (
             <div
                 className='overflow-auto bg-slate-950 text-white rounded-sm p-2'
@@ -108,60 +98,40 @@ const Project = () => {
     }
 
     useEffect(() => {
-
         initializeSocket(project._id)
-
         if (!webContainer) {
             getWebContainer().then(container => {
                 setWebContainer(container)
                 console.log("container started")
             })
         }
-
-
         receiveMessage('project-message', data => {
-
             console.log(data)
-            
             if (data.sender._id == 'ai') {
-
-
                 const message = JSON.parse(data.message)
-
                 console.log(message)
-
                 webContainer?.mount(message.fileTree)
-
                 if (message.fileTree) {
                     setFileTree(message.fileTree || {})
                 }
                 setMessages(prevMessages => [ ...prevMessages, data ]) // Update messages state
             } else {
-
-
                 setMessages(prevMessages => [ ...prevMessages, data ]) // Update messages state
             }
         })
 
 
         axios.get(`/projects/get-project/${location.state.project._id}`).then(res => {
-
             console.log(res.data.project)
-
             setProject(res.data.project)
             setFileTree(res.data.project.fileTree || {})
         })
 
         axios.get('/users/all').then(res => {
-
             setUsers(res.data.users)
-
         }).catch(err => {
-
             console.log(err)
-
         })
-
     }, [])
 
     function saveFileTree(ft) {
@@ -191,7 +161,7 @@ const Project = () => {
                         <p>Add collaborator</p>
                     </button>
                     <button onClick={() => setIsSidePanelOpen(!isSidePanelOpen)} className='p-2'>
-                        <i className="ri-group-fill"></i>
+                        <i className={`${isSidePanelOpen ? `ri-arrow-left-circle-line` : `ri-group-fill` }`}></i>
                     </button>
                 </header>
                 <div className="conversation-area pt-14 pb-10 flex-grow flex flex-col h-full relative">
