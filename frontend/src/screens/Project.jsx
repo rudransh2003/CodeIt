@@ -100,7 +100,7 @@ const Project = () => {
             </div>
         );
     }
-    
+
 
     useEffect(() => {
         initializeSocket(project._id)
@@ -115,7 +115,7 @@ const Project = () => {
 
             if (data.sender._id === 'ai') {
                 let parsedMessage = {};
-            
+
                 if (typeof data.message === "string") {
                     // AI sent plain text
                     try {
@@ -127,24 +127,24 @@ const Project = () => {
                     // AI sent an object directly
                     parsedMessage = data.message;
                 }
-            
+
                 if (parsedMessage.fileTree) {
                     const mergedTree = {
                         ...fileTree,
                         ...parsedMessage.fileTree
                     };
-            
+
                     webContainer?.mount(mergedTree);
                     setFileTree(mergedTree);
                 }
-                  
-            
+
+
                 setMessages(prev => [...prev, { ...data, message: parsedMessage }]);
             } else {
                 setMessages(prev => [...prev, data]);
             }
-            
-                      
+
+
         });
 
         axios.get(`/projects/get-project/${location.state.project._id}`).then(res => {
@@ -215,8 +215,8 @@ const Project = () => {
                         <input
                             value={message}
                             onChange={(e) => setMessage(e.target.value)}
-                            className='p-3 px-4 border border-gray-600 bg-gray-700 text-white placeholder-gray-400 outline-none flex-grow rounded-l-lg focus:border-blue-500 transition-colors duration-200' 
-                            type="text" 
+                            className='p-3 px-4 border border-gray-600 bg-gray-700 text-white placeholder-gray-400 outline-none flex-grow rounded-l-lg focus:border-blue-500 transition-colors duration-200'
+                            type="text"
                             placeholder='Type your message...' />
                         <button
                             onClick={send}
@@ -278,11 +278,10 @@ const Project = () => {
                                     <button
                                         key={index}
                                         onClick={() => setCurrentFile(file)}
-                                        className={`open-file cursor-pointer p-3 px-4 flex items-center w-fit gap-2 text-sm font-medium border-r border-gray-600 transition-colors duration-200 ${
-                                            currentFile === file 
-                                                ? 'bg-gray-700 text-white border-b-2 border-blue-500' 
+                                        className={`open-file cursor-pointer p-3 px-4 flex items-center w-fit gap-2 text-sm font-medium border-r border-gray-600 transition-colors duration-200 ${currentFile === file
+                                                ? 'bg-gray-700 text-white border-b-2 border-blue-500'
                                                 : 'bg-gray-800 text-gray-300 hover:bg-gray-700 hover:text-white'
-                                        }`}>
+                                            }`}>
                                         <i className="ri-file-text-line text-xs"></i>
                                         <p>{file}</p>
                                         <i className="ri-close-line text-xs opacity-60 hover:opacity-100 ml-1"></i>
@@ -325,7 +324,7 @@ const Project = () => {
                     </div>
                     <div className="bottom flex flex-grow max-w-full shrink overflow-auto">
                         {
-                            fileTree[currentFile] && (
+                            fileTree[currentFile] ? (
                                 <div className="code-editor-area h-full overflow-auto flex-grow bg-gray-900">
                                     <pre className="hljs h-full">
                                         <code
@@ -355,6 +354,18 @@ const Project = () => {
                                         />
                                     </pre>
                                 </div>
+                            ) : (
+                                <div className="flex flex-col items-center justify-center text-center text-gray-400 flex-grow bg-gray-900">
+                                    <h2 className="text-xl font-semibold text-white mb-3">
+                                        👋 Welcome to Code-It
+                                    </h2>
+                                    <p className="max-w-md text-md leading-relaxed">
+                                        Messages starting with @ai will be treated as ai prompts and will be visible for collaborators.
+                                        <br />
+                                        Select a file from the explorer to start editing, or create
+                                        a new file using <span className="text-blue-400 font-semibold">@ai</span> prompts.
+                                    </p>
+                                </div>
                             )
                         }
                     </div>
@@ -366,8 +377,8 @@ const Project = () => {
                         <div className="address-bar bg-gray-800 border-b border-gray-600">
                             <input type="text"
                                 onChange={(e) => setIframeUrl(e.target.value)}
-                                value={iframeUrl} 
-                                className="w-full p-3 px-4 bg-gray-700 text-white placeholder-gray-400 border-none outline-none focus:bg-gray-600 transition-colors duration-200" 
+                                value={iframeUrl}
+                                className="w-full p-3 px-4 bg-gray-700 text-white placeholder-gray-400 border-none outline-none focus:bg-gray-600 transition-colors duration-200"
                                 placeholder="Enter URL..." />
                         </div>
                         <iframe src={iframeUrl} className="w-full h-full bg-white"></iframe>
@@ -401,11 +412,10 @@ const Project = () => {
                         <button
                             onClick={addCollaborators}
                             disabled={selectedUserId.size === 0}
-                            className={`absolute bottom-6 left-1/2 transform -translate-x-1/2 px-6 py-3 text-white rounded-lg font-medium transition-all duration-200 ${
-                                selectedUserId.size === 0 
-                                    ? 'bg-gray-600 cursor-not-allowed' 
+                            className={`absolute bottom-6 left-1/2 transform -translate-x-1/2 px-6 py-3 text-white rounded-lg font-medium transition-all duration-200 ${selectedUserId.size === 0
+                                    ? 'bg-gray-600 cursor-not-allowed'
                                     : 'bg-blue-600 hover:bg-blue-700 hover:shadow-lg'
-                            }`}>
+                                }`}>
                             Add Collaborators ({selectedUserId.size})
                         </button>
                     </div>
