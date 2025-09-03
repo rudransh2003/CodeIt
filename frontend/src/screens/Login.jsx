@@ -66,7 +66,7 @@ const Login = () => {
                         Login
                     </button>
                 </form>
-                <div className="flex items-center justify-center my-6">
+{/*                 <div className="flex items-center justify-center my-6">
                     <span className="text-gray-500 text-sm">OR</span>
                 </div>
                 <button
@@ -74,7 +74,7 @@ const Login = () => {
                     className="w-full p-3 rounded-lg border border-white/30 text-white font-medium hover:bg-white hover:text-black transition"
                 >
                     Continue with Google
-                </button>
+                </button> */}
                 <p className="text-gray-400 mt-6 text-center">
                     Don&apos;t have an account?{" "}
                     <Link to="/register" className="text-white underline hover:text-gray-300">
