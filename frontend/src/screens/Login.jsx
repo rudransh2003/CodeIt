@@ -26,8 +26,9 @@ const Login = () => {
     }
 
     function handleGoogleLogin() {
-        window.location.href = "http://localhost:5000/users/google"
-    }
+        const backendUrl = import.meta.env.VITE_API_BASE_URL || "http://localhost:5000";
+        window.location.href = `${backendUrl}/users/google`;
+    }    
 
     return (
         <div className="min-h-screen flex items-center justify-center bg-black">
