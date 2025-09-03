@@ -50,15 +50,19 @@ export const loginController = async (req, res) => {
   };
   
 
-export const googleLoginController = async (req, res) => {
+  export const googleLoginController = async (req, res) => {
     try {
       const token = await req.user.generateJWT();
       delete req.user._doc.password;
-      res.redirect(`http://localhost:5173/auth/success?token=${token}`);
+      const FRONTEND_URL = process.env.FRONTEND_URL || "http://localhost:5173";
+      res.redirect(`${FRONTEND_URL}/auth/success?token=${token}`);
     } catch (err) {
-      res.redirect(`http://localhost:5173/auth/error`);
+      console.error("Google login failed:", err);
+      const FRONTEND_URL = process.env.FRONTEND_URL || "http://localhost:5173";
+      res.redirect(`${FRONTEND_URL}/auth/error`);
     }
-  }
+  };
+  
 
 export const profileController = async (req, res) => {
     res.status(200).json({

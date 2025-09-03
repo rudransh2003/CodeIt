@@ -5,7 +5,7 @@ export default function LandingPage() {
     <div className="min-h-screen bg-black flex flex-col">
       {/* Navbar */}
       <nav className="flex justify-between items-center px-10 py-6 bg-black/80 backdrop-blur-md text-white shadow-lg">
-        <h1 className="text-2xl font-extrabold tracking-wide">CodeCollaborate</h1>
+        <h1 className="text-2xl font-extrabold tracking-wide">Code-it</h1>
         <div className="space-x-6">
           <Link to="/login">
             <button className="px-5 py-2 rounded-lg border border-white/30 text-white font-medium hover:bg-white hover:text-black transition">
@@ -65,7 +65,7 @@ export default function LandingPage() {
 
       {/* Footer */}
       <footer className="bg-black text-gray-500 py-6 text-center border-t border-white/10">
-        <p>© 2025 CodeCollaborate. All rights reserved.</p>
+        <p>© 2025 Code-it. All rights reserved.</p>
       </footer>
     </div>
   );
