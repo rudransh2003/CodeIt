@@ -68,15 +68,23 @@ io.on('connection', socket => {
         if (aiIsPresentInMessage) {
             const prompt = message.replace('@ai', '');
             const result = await generateResult(prompt);
+        
+            // persist new fileTree if AI created files
+            if (result.fileTree) {
+                socket.project.fileTree = {
+                    ...socket.project.fileTree,
+                    ...result.fileTree
+                };
+                await socket.project.save();
+            }
+        
             io.to(socket.roomId).emit('project-message', {
                 message: result,
-                sender: {
-                    _id: 'ai',
-                    email: 'AI'
-                }
-            })
-            return
+                sender: { _id: 'ai', email: 'AI' }
+            });
+            return;
         }
+        
     })
 
     socket.on('disconnect', () => {

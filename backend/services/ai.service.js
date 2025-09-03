@@ -21,15 +21,10 @@ const model = genAI.getGenerativeModel({
             file: {
                 contents: "
                 const express = require('express');
-
                 const app = express();
-
-
                 app.get('/', (req, res) => {
                     res.send('Hello World!');
                 });
-
-
                 app.listen(3000, () => {
                     console.log('Server is running on port 3000');
                 })
@@ -101,8 +96,14 @@ const model = genAI.getGenerativeModel({
 });
 
 export const generateResult = async (prompt) => {
-
     const result = await model.generateContent(prompt);
+    const raw = result.response.text();
 
-    return result.response.text()
+    try {
+        // Parse JSON response
+        return JSON.parse(raw);
+    } catch (e) {
+        // If parsing fails, return as plain text
+        return { text: raw };
+    }
 }

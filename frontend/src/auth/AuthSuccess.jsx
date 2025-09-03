@@ -15,9 +15,7 @@ const AuthSuccess = () => {
 
       // You can also decode token here to get user info if needed
       // Example: const user = JSON.parse(atob(token.split('.')[1]));
-
-      // Redirect to home/dashboard
-      navigate("/");
+      navigate("/home");
     } else {
       // If no token, redirect to login
       navigate("/login");

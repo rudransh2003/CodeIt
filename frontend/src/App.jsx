@@ -1,6 +1,7 @@
 import React, { useEffect, useContext } from 'react'
 import AppRoutes from './routes/AppRoutes'
 import { UserProvider, UserContext } from './context/user.context'
+import ToastProvider from './components/ToastProvider'
 
 const Wrapper = () => {
   const { setUser } = useContext(UserContext)
@@ -18,6 +19,7 @@ const Wrapper = () => {
 const App = () => {
   return (
     <UserProvider>
+      <ToastProvider />
       <Wrapper />
     </UserProvider>
   )

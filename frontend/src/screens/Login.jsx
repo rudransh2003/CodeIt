@@ -2,6 +2,8 @@ import React, { useState, useContext } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import axios from '../config/axios'
 import { UserContext } from '../context/user.context'
+import { handleApiError } from '../utils/errorHandler'
+import { toast } from 'react-toastify'
 
 const Login = () => {
     const [email, setEmail] = useState('')
@@ -10,69 +12,73 @@ const Login = () => {
     const navigate = useNavigate()
 
     function submitHandler(e) {
-        e.preventDefault()
+        e.preventDefault();
         axios.post('/users/login', { email, password })
             .then((res) => {
-                localStorage.setItem('token', res.data.token)  // token recieved from backend
-                setUser(res.data.user)
-                navigate('/')
+                localStorage.setItem("token", res.data.token);
+                setUser(res.data.user);
+                toast.success("Login successful!");
+                navigate("/home");
             })
             .catch((err) => {
-                console.log(err.response?.data || err.message)
-            })
+                handleApiError(err, "Login failed");
+            });
     }
 
     function handleGoogleLogin() {
         window.location.href = "http://localhost:5000/users/google"
-        // backend should handle redirect to Google
-        // after success, backend should redirect to frontend like
     }
 
     return (
-        <div className="min-h-screen flex items-center justify-center bg-gray-900">
-            <div className="bg-gray-800 p-8 rounded-lg shadow-lg w-full max-w-md">
-                <h2 className="text-2xl font-bold text-white mb-6">Login</h2>
-                <form onSubmit={submitHandler}>
-                    <div className="mb-4">
+        <div className="min-h-screen flex items-center justify-center bg-black">
+            <div className="bg-black/80 backdrop-blur-lg p-8 rounded-xl border border-white/10 shadow-2xl w-full max-w-md">
+                <h2 className="text-3xl font-extrabold text-white mb-8 text-center">
+                    Welcome Back
+                </h2>
+                <form onSubmit={submitHandler} className="space-y-6">
+                    <div>
                         <label className="block text-gray-400 mb-2" htmlFor="email">Email</label>
                         <input
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
                             type="email"
                             id="email"
-                            className="w-full p-3 rounded bg-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            className="w-full p-3 rounded-lg bg-black border border-white/20 text-white focus:outline-none focus:ring-2 focus:ring-white"
                             placeholder="Enter your email"
                         />
                     </div>
-                    <div className="mb-6">
+                    <div>
                         <label className="block text-gray-400 mb-2" htmlFor="password">Password</label>
                         <input
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
                             type="password"
                             id="password"
-                            className="w-full p-3 rounded bg-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            className="w-full p-3 rounded-lg bg-black border border-white/20 text-white focus:outline-none focus:ring-2 focus:ring-white"
                             placeholder="Enter your password"
                         />
                     </div>
                     <button
                         type="submit"
-                        className="w-full p-3 rounded bg-blue-500 text-white hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        className="w-full p-3 rounded-lg bg-white text-black font-semibold hover:bg-gray-200 transition shadow-md"
                     >
                         Login
                     </button>
                 </form>
-                <div className="flex items-center justify-center my-4">
+                <div className="flex items-center justify-center my-6">
                     <span className="text-gray-500 text-sm">OR</span>
                 </div>
                 <button
                     onClick={handleGoogleLogin}
-                    className="w-full p-3 rounded bg-red-500 text-white hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500"
+                    className="w-full p-3 rounded-lg border border-white/30 text-white font-medium hover:bg-white hover:text-black transition"
                 >
                     Continue with Google
                 </button>
-                <p className="text-gray-400 mt-4">
-                    Don't have an account? <Link to="/register" className="text-blue-500 hover:underline">Create one</Link>
+                <p className="text-gray-400 mt-6 text-center">
+                    Don&apos;t have an account?{" "}
+                    <Link to="/register" className="text-white underline hover:text-gray-300">
+                        Create one
+                    </Link>
                 </p>
             </div>
         </div>

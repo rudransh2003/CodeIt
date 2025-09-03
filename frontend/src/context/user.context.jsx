@@ -17,10 +17,6 @@ export const UserProvider = ({ children }) => {
       setLoading(false);
       return;
     }
-
-    console.log('UserContext: Token found, validating...');
-    console.log('Token preview:', token.substring(0, 20) + '...');
-
     axios.get(`${import.meta.env.VITE_API_BASE_URL}/users/validate`, {
       headers: { Authorization: `Bearer ${token}` }
     })

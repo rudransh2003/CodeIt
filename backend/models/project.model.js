@@ -8,7 +8,7 @@ const projectSchema = new mongoose.Schema({
         trim: true,
         unique: [ true, 'Project name must be unique' ],
     },
-    description : {
+    description: {
         type: String,
         lowercase: true,
         required: true
@@ -19,11 +19,28 @@ const projectSchema = new mongoose.Schema({
             ref: 'user'
         }
     ],
-    fileTree: {   //This is meant to represent the folder & file structure of the project
+    fileTree: {   // represents the folder & file structure
         type: Object,
         default: {}
     },
-})
-const Project = mongoose.model('project', projectSchema)
+    messages: [   // NEW FIELD for chat persistence
+        {
+            sender: {
+                _id: { type: String },
+                email: { type: String }
+            },
+            message: {
+                text: { type: String },
+                fileTree: { type: Object, default: {} }
+            },
+            createdAt: {
+                type: Date,
+                default: Date.now
+            }
+        }
+    ]
+});
+
+const Project = mongoose.model('project', projectSchema);
 
 export default Project;
