@@ -230,11 +230,11 @@ const Project = () => {
             />
 
             <section className="right bg-gray-900 flex-grow h-full flex">
-                <div className="explorer h-full max-w-64 min-w-52 bg-gray-800 border-r border-gray-600">
-                    <div className="file-tree w-full">
-                        <div className="p-4 border-b border-gray-600">
-                            <h2 className="text-white font-medium text-sm">Explorer</h2>
-                        </div>
+                <div className="explorer h-screen max-w-64 min-w-52 bg-gray-800 border-r border-gray-600 flex flex-col">
+                    <div className="p-4 border-b border-gray-600">
+                        <h2 className="text-white font-medium text-sm">Explorer</h2>
+                    </div>
+                    <div className="flex-grow overflow-y-auto scrollbar-thin scrollbar-thumb-gray-600 scrollbar-track-gray-800">
                         {fileTree.map((node) => (
                             <FileNode
                                 key={node.name}
@@ -247,6 +247,8 @@ const Project = () => {
                         ))}
                     </div>
                 </div>
+
+
 
                 <div className="code-editor flex flex-col flex-grow h-full shrink">
                     <div className="top flex justify-between w-full bg-gray-800 border-b border-gray-600">
