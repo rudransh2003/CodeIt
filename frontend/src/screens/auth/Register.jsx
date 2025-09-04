@@ -1,9 +1,9 @@
 import React, { useState, useContext } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import { UserContext } from '../context/user.context'
-import axios from '../config/axios'
+import { UserContext } from '../../context/user.context'
+import axios from '../../config/axios'
 import { toast } from "react-toastify"
-import { handleApiError } from '../utils/errorHandler'
+import { handleApiError } from '../../utils/errorHandler'
 
 const Register = () => {
     const [email, setEmail] = useState('')
